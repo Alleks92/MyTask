@@ -6,6 +6,7 @@ let score = 20;
 // Нажатие на кнопку "Сначала!"
 document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.question').textContent = '???';
+  document.querySelector('.question').style.width = '25rem';
   document.querySelector('body').style.backgroundColor = 'rgb(0, 0, 0)';
   document.querySelector('.guess-message').textContent = 'Начни угадывать!';
   score = 20;
