@@ -1,26 +1,57 @@
-// Мой код
-const bills = [31, 95, 276, 540, 27, 205, 11, 1180, 96 , 57];
-const tips = [];
-const totals = [];
-const calculateTips = bill => bill < 20 ? bill * 0.2 : bill * 0.15;
+const secretNumberFunctions = () => Math.trunc(Math.random() * 20) + 1;  
+let secretNumber = secretNumberFunctions();
+let score = 20;
+// document.querySelector('.question').textContent = secretNumber; // = таким кодом мы выводим в объект  с вопросами рандомное число из переменной secretNumber
 
-for(let i = 0; i < bills.length; i++) {
-   tips.push(calculateTips(bills[i]));
-   totals.push(bills[i] + tips[i]);
-}
+// Нажатие на кнопку "Сначала!"
+document.querySelector('.again').addEventListener('click', function () {
+  document.querySelector('.question').textContent = '???';
+  document.querySelector('body').style.backgroundColor = 'rgb(0, 0, 0)';
+  document.querySelector('.guess-message').textContent = 'Начни угадывать!';
+  score = 20;
+  document.querySelector('.score').textContent = score;
+  secretNumber = secretNumberFunctions();
+});
 
-console.log(bills, tips , totals);
+//Вывод элемента ввода в консоль при нажатии на кнопку "Проверить"
+document.querySelector('.check').addEventListener('click', function () {
+  const guessingNumber = Number(document.querySelector('.number-input').value);
+  console.log(guessingNumber, typeof guessingNumber);
 
-// Доп задача, с ней не смог справиться, подсмотрел
-const calculateAverage = function(arr) {
-   let sum = 0;
-   for (let i = 0; i < arr.length; i++) {
-      sum = sum + arr[i];
-   }
-   return sum / arr.length;
-}
+  // No input
+  if (!guessingNumber) {
+    document.querySelector('.guess-message').textContent = 'Введите число!'; // = если число не введино то выводится сообщение 'Введите число!'
+  } else if (guessingNumber === secretNumber) {
+    // Player won
+    document.querySelector('.guess-message').textContent = 'Правильно!'; // = если число которое вы пишете совпадает с рандомным то этот параметр выводить текст 'Правильно!'
+    document.querySelector('.question').textContent = secretNumber;
+    document.querySelector('body').style.backgroundColor = 'rgb(9, 250, 21)';
+    document.querySelector('.question').style.width = '50rem';
 
-console.log(calculateAverage(totals));
+    // Too high
+  } else if (guessingNumber > secretNumber) {
+    if (score > 1) {
+      // = этот объект нужен для того что бы уменьшающееся после каждого нажатия кнопки число очков не уходило в минусовые значенит, то есть ниже единицы и при достижении нуля выдавало сообщение "Конец игры!"
+      document.querySelector('.guess-message').textContent =
+        'Слишком большое число!'; // = если число которое вы вводите больше случайного
+      score--; // при каждом клике на кнопку уменьшает очки на один
+      document.querySelector('.score').textContent = score;
+    } else {
+      document.querySelector('.guess-message').textContent = 'Конец игры!';
+    }
 
+    // Too low
+  } else if (guessingNumber < secretNumber) {
+    if (score > 1) {
+      // = этот объект нужен для того что бы уменьшающееся после каждого нажатия кнопки число очков не уходило в минусовые значенит, то есть ниже единицы и при достижении нуля выдавало сообщение "Конец игры!"
+      document.querySelector('.guess-message').textContent =
+        'Слишком маленькое число!'; // = если число которое вы вводите меньше случайного
+      score--; // при каждом клике на кнопку уменьшает очки на один
+      document.querySelector('.score').textContent = score;
+    } else {
+      document.querySelector('.guess-message').textContent = 'Конец игры!';
+      document.querySelector('.score').textContent = 0;
+    }
+  }
+});
 
-   
