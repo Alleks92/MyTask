@@ -9,8 +9,7 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.question').style.width = '25rem';
   document.querySelector('body').style.backgroundColor = 'rgb(0, 0, 0)';
   document.querySelector('.guess-message').textContent = 'Начни угадывать!';
-  score = 20;
-  document.querySelector('.score').textContent = score;
+  document.querySelector('.score').textContent = '20';
   secretNumber = secretNumberFunctions();
 });
 
